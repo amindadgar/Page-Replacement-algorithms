@@ -27,10 +27,42 @@ def MRU(request,bufferSize):
 def LRU(request,bufferSize):
     BUFFER =[]
     BUFFER_TIMER = [0]*bufferSize
+    number = -1
+    index=-1   #number and index are variables for our timer
+    characterCounter=0
     for i in range(bufferSize):  #At first just put characters in buffer
     	if i<len(request):
     		BUFFER.append(request[i])
-    		BUFFER_TIMER[i] = bufferSize-i-1
+    		print("'"+request[i]+"' is added and Page Fault")
+    		BUFFER_TIMER[i] = bufferSize-i-1  #setting the timer for the first time
+    		characterCounter=i
+    characterCounter+=1
+    while characterCounter<len(request):
+        if (request[characterCounter] not in BUFFER):   #if the page was not in buffer
+            for j in range(len(BUFFER_TIMER)):
+            	if number < BUFFER_TIMER[j]:
+            	    number = BUFFER_TIMER[j]
+            	    index = j                      #Find the biggest number in timer
+            BUFFER[index] = request[characterCounter]
+            print("'"+request[characterCounter]+"' is added and Page Fault")
+            BUFFER_TIMER[index]=0
+            for i in range(len(BUFFER_TIMER)):
+                if(i!=index):
+                    BUFFER_TIMER[i]+=1    #increase timer for other pages in buffer
+            characterCounter+=1
+        else:                   #if the page was in buffer
+            index = BUFFER.index(request[characterCounter])
+            BUFFER_TIMER[index]=0
+            print("'"+request[characterCounter]+"' is available in buffer")
+            for i in range(len(BUFFER_TIMER)):
+                if(i!=index):
+                    BUFFER_TIMER[i]+=1            ##increase timer for other pages in buffer
+            characterCounter+=1
+
+    print("\n\nFinished and now showing buffer")
+    for i in BUFFER:
+    	print(i+" "),
+    print("\n\n\n")
     
     
 
