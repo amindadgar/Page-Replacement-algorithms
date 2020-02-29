@@ -64,7 +64,40 @@ def LRU(request,bufferSize):
     	print(i+" "),
     print("\n\n\n")
     
-    
+def Clock(request,bufferSize):
+    BUFFER=["-1"]*bufferSize   # / is sth that would never be in page requests
+    characterCounter=0
+    BUFFER_REF_BIT=[False]*bufferSize
+    '''for i in range(bufferSize):   #First time putting characters in buffer
+        BUFFER.append(request[i])
+        BUFFER_REF_BIT[i]=True   #Setting Reference bit to true (i mean 1) ,And False means 0
+        print("'"+request[i]+"' is added and Page Fault")
+        characterCounter=i'''
+
+    characterCounter+=1
+    CurrentBit = 0
+    while characterCounter<len(request):
+        if request[characterCounter] in BUFFER:
+            print("'"+request[characterCounter]+"' is available in buffer")
+            BUFFER_REF_BIT[BUFFER.index(request[characterCounter])] = True
+            characterCounter+=1
+        else:
+            while BUFFER_REF_BIT[CurrentBit] == True:
+                BUFFER_REF_BIT[CurrentBit] = False
+                CurrentBit+=1
+                if(CurrentBit==bufferSize):
+                    CurrentBit=0
+            BUFFER[CurrentBit]=request[characterCounter]
+            BUFFER_REF_BIT[CurrentBit]=True
+            print("'"+request[characterCounter]+"' is added and Page Fault")
+            characterCounter+=1
+    print("\n\nFinished and now showing buffer")
+    for i in BUFFER:
+        print(i+" "),
+
+    print("\n\n\n")    
+        
+        
 
 
 
@@ -81,8 +114,7 @@ while(True):
     elif(a==2):
     	LRU(request,bufferSize)
     elif(a==3):
-    	print("Unfortunatly clock algorithm is not done yet please choose another one")
-    	#CLOCK(request,bufferSize)
+    	Clock(request,bufferSize)
     elif(a==4):
     	print("Unfortunatly Random algorithm is not done yet please choose another one")
     	#Random(request,bufferSize)
