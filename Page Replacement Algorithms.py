@@ -9,18 +9,20 @@ def MRU(request,bufferSize):
     	    characterCounter = i
     	    print("'"+request[i]+"' is added and Page Fault")
     characterCounter+=1'''
-    index = bufferSize-1
+    index = 0
     while (characterCounter<len(request)):
         if(request[characterCounter] in BUFFER):
     	    index=BUFFER.index(request[characterCounter])
     	    print("'"+request[characterCounter]+"' is available in buffer")
     	    characterCounter+=1
         else:
-    	    BUFFER[index] = request[characterCounter]
-    	    if "/" in BUFFER:
+            BUFFER[index]=request[characterCounter]
+            if "/" in BUFFER:
                 index+=1
+                if(index == bufferSize):
+                    index = bufferSize - 1
             print("'"+request[characterCounter]+"' is added and Page Fault")
-    	    characterCounter+=1
+            characterCounter+=1
     print("\n\nFinished and now showing buffer")
     for i in BUFFER:
     	print(i+" "),
