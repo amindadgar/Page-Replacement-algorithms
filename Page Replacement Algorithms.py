@@ -1,14 +1,14 @@
 import time
 
 def MRU(request,bufferSize):
-    BUFFER = []
+    BUFFER=["/"]*bufferSize
     characterCounter = 0
-    for i in range(bufferSize):  #At first just put characters in buffer
+    '''for i in range(bufferSize):  #At first just put characters in buffer
         if i<len(request):
     	    BUFFER.append(request[i])
     	    characterCounter = i
     	    print("'"+request[i]+"' is added and Page Fault")
-    characterCounter+=1
+    characterCounter+=1'''
     index = bufferSize-1
     while (characterCounter<len(request)):
         if(request[characterCounter] in BUFFER):
@@ -17,7 +17,9 @@ def MRU(request,bufferSize):
     	    characterCounter+=1
         else:
     	    BUFFER[index] = request[characterCounter]
-    	    print("'"+request[characterCounter]+"' is added and Page Fault")
+    	    if "/" in BUFFER:
+                index+=1
+            print("'"+request[characterCounter]+"' is added and Page Fault")
     	    characterCounter+=1
     print("\n\nFinished and now showing buffer")
     for i in BUFFER:
@@ -25,18 +27,18 @@ def MRU(request,bufferSize):
     print("\n\n\n")
 
 def LRU(request,bufferSize):
-    BUFFER=[]
+    BUFFER=["/"]*bufferSize
     BUFFER_TIMER = [0]*bufferSize
     number = -1
     index=-1   #number and index are variables for our timer
     characterCounter=0
-    for i in range(bufferSize):  #At first just put characters in buffer
+    '''for i in range(bufferSize):  #At first just put characters in buffer
     	if i<len(request):
     		BUFFER.append(request[i])
     		print("'"+request[i]+"' is added and Page Fault")
     		BUFFER_TIMER[i] = bufferSize-i-1  #setting the timer for the first time
     		characterCounter=i
-    characterCounter+=1
+    characterCounter+=1'''
     while characterCounter<len(request):
         if (request[characterCounter] not in BUFFER):   #if the page was not in buffer
             for j in range(len(BUFFER_TIMER)):
