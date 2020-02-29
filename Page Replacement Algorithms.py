@@ -25,7 +25,7 @@ def MRU(request,bufferSize):
     print("\n\n\n")
 
 def LRU(request,bufferSize):
-    BUFFER =[]
+    BUFFER=[]
     BUFFER_TIMER = [0]*bufferSize
     number = -1
     index=-1   #number and index are variables for our timer
@@ -65,7 +65,7 @@ def LRU(request,bufferSize):
     print("\n\n\n")
     
 def Clock(request,bufferSize):
-    BUFFER=["-1"]*bufferSize   # / is sth that would never be in page requests
+    BUFFER=["/"]*bufferSize   # / is sth that would never be in page requests
     characterCounter=0
     BUFFER_REF_BIT=[False]*bufferSize
     '''for i in range(bufferSize):   #First time putting characters in buffer
@@ -74,7 +74,6 @@ def Clock(request,bufferSize):
         print("'"+request[i]+"' is added and Page Fault")
         characterCounter=i'''
 
-    characterCounter+=1
     CurrentBit = 0
     while characterCounter<len(request):
         if request[characterCounter] in BUFFER:
