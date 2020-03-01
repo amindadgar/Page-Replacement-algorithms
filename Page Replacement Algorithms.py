@@ -1,4 +1,6 @@
 import time
+import random 
+
 
 def MRU(request,bufferSize):
     BUFFER=["/"]*bufferSize
@@ -99,6 +101,42 @@ def Clock(request,bufferSize):
         print(i+" "),
 
     print("\n\n\n")    
+
+
+
+def Random(request,bufferSize):
+    BUFFER = ["/"]*bufferSize
+    i=0
+    while i <bufferSize:
+        if request[i] in BUFFER:
+            print("'"+request[i]+"' is available in buffer")
+        else:
+            BUFFER[i] = request[i]
+            print("'"+request[i]+"' is added and Page Fault")
+            i+=1
+    characterCounter = i
+    while characterCounter < len(request) :
+        if request[characterCounter] not in BUFFER:
+            BUFFER[random.randrange(0,bufferSize,1)] = request[characterCounter]
+            print("'"+request[characterCounter]+"' is added and Page Fault")
+            characterCounter+=1
+        else:
+            print("'"+request[characterCounter]+"' is available in buffer")
+            characterCounter+=1
+
+    print("\n\nFinished and now showing buffer")
+    for i in BUFFER:
+        print(i+" "),
+
+    print("\n\n\n")    
+
+        
+
+
+
+    
+            
+
         
         
 
@@ -119,8 +157,8 @@ while(True):
     elif(a==3):
     	Clock(request,bufferSize)
     elif(a==4):
-    	print("Unfortunatly Random algorithm is not done yet please choose another one")
-    	#Random(request,bufferSize)
+    	#print("Unfortunatly Random algorithm is not done yet please choose another one")
+    	Random(request,bufferSize)
     elif(a==5):
         request = raw_input("please Enter Request pages\n (example: ABHY)\n")
     elif(a==6):
