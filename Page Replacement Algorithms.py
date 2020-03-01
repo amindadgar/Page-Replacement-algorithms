@@ -5,12 +5,7 @@ import random
 def MRU(request,bufferSize):
     BUFFER=["/"]*bufferSize
     characterCounter = 0
-    '''for i in range(bufferSize):  #At first just put characters in buffer
-        if i<len(request):
-    	    BUFFER.append(request[i])
-    	    characterCounter = i
-    	    print("'"+request[i]+"' is added and Page Fault")
-    characterCounter+=1'''
+
     index = 0
     while (characterCounter<len(request)):
         if(request[characterCounter] in BUFFER):
@@ -36,13 +31,7 @@ def LRU(request,bufferSize):
     number = -1
     index=-1   #number and index are variables for our timer
     characterCounter=0
-    '''for i in range(bufferSize):  #At first just put characters in buffer
-    	if i<len(request):
-    		BUFFER.append(request[i])
-    		print("'"+request[i]+"' is added and Page Fault")
-    		BUFFER_TIMER[i] = bufferSize-i-1  #setting the timer for the first time
-    		characterCounter=i
-    characterCounter+=1'''
+
     while characterCounter<len(request):
         if (request[characterCounter] not in BUFFER):   #if the page was not in buffer
             for j in range(len(BUFFER_TIMER)):
@@ -74,11 +63,6 @@ def Clock(request,bufferSize):
     BUFFER=["/"]*bufferSize   # / is sth that would never be in page requests
     characterCounter=0
     BUFFER_REF_BIT=[False]*bufferSize
-    '''for i in range(bufferSize):   #First time putting characters in buffer
-        BUFFER.append(request[i])
-        BUFFER_REF_BIT[i]=True   #Setting Reference bit to true (i mean 1) ,And False means 0
-        print("'"+request[i]+"' is added and Page Fault")
-        characterCounter=i'''
 
     CurrentBit = 0
     while characterCounter<len(request):
@@ -107,13 +91,22 @@ def Clock(request,bufferSize):
 def Random(request,bufferSize):
     BUFFER = ["/"]*bufferSize
     i=0
-    while i <bufferSize:
+    bufferChoice = [i]
+    while "/" in BUFFER:
         if request[i] in BUFFER:
             print("'"+request[i]+"' is available in buffer")
         else:
             BUFFER[i] = request[i]
             print("'"+request[i]+"' is added and Page Fault")
-            i+=1
+            j=random.randrange(0,bufferSize,1)
+            while j in bufferChoice:
+                j=random.randrange(0,bufferSize,1)
+                if len(bufferChoice) == bufferSize:
+                    break
+            i=j
+            bufferChoice.append(i)
+            
+
     characterCounter = i
     while characterCounter < len(request) :
         if request[characterCounter] not in BUFFER:
@@ -134,15 +127,6 @@ def Random(request,bufferSize):
 
 
 
-    
-            
-
-        
-        
-
-
-
-
 
 
 print("WARINING: This code in written in python version 2 So if you have python 3 you maybe have an error for raw_input\n")
@@ -157,7 +141,6 @@ while(True):
     elif(a==3):
     	Clock(request,bufferSize)
     elif(a==4):
-    	#print("Unfortunatly Random algorithm is not done yet please choose another one")
     	Random(request,bufferSize)
     elif(a==5):
         request = raw_input("please Enter Request pages\n (example: ABHY)\n")
